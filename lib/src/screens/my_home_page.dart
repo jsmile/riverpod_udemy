@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final appCounterProvider = Provider<int>((ref) => 0); // 수정 불가, 읽기 전용
+final appCounterProvider = StateProvider<int>((ref) => 0); // 수정 가능
 
 class MyHomePage extends ConsumerWidget {
   final String title;
@@ -32,7 +32,11 @@ class MyHomePage extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          ref
+              .read(appCounterProvider.notifier)
+              .state++; // 수정 가능 : .notifier 의 state 수정
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
